@@ -3,8 +3,52 @@ require "byebug"
 
 class Minesweeper
   def initialize
-
+    @board = Board.new
   end
+
+  def run
+    until win? || lose?
+      board.render
+      play_turn
+    end
+  end
+
+  def play_turn
+    puts "Do you want to flag or move?"
+    answer = gets.chomp.downcase
+    if answer == "flag"
+      puts "Which tile do you want to flag?"
+      tile_pos = gets.chomp
+      tile_pos = parse_pos(tile_pos)
+      if tile_pos == nil
+        puts "That is not a valid tile location!"
+        return
+      end
+      board[tile_pos[0],tile_pos[1]].is_flagged = true
+    end
+
+    if answer == "move"
+      puts "Which tile do you want to move on."
+    end
+  end
+
+  def parse_pos(string)
+    pos_array = string.split(",").map{|el| Integer(el)}
+    return nil if pos_array.length != 2
+    return nil unless pos_array.all?{|el| board.is_valid_location?}
+    pos_array
+  end
+
+  def lose?
+    #TODO Implement loss condition
+    return false
+  end
+
+  def win?
+    #TODO Implement win condition
+    return false
+  end
+
 end
 
 class Board
