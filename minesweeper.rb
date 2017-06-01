@@ -2,6 +2,9 @@
 require "byebug"
 
 class Minesweeper
+
+  attr_accessor :board
+
   def initialize
     @board = Board.new
   end
@@ -20,14 +23,14 @@ class Minesweeper
       puts "Which tile do you want to flag?"
       tile_pos = get_user_pick
       tile = board[tile_pos.first, tile_pos.last]
-      tile.is_flagged = true unless tile_pos.nil
+      tile.is_flagged = true unless tile_pos.nil?
     end
 
     if answer == "move"
       puts "Which tile do you want to move on."
       tile_pos = get_user_pick
       tile = board[tile_pos.first, tile_pos.last]
-      if tile.mined
+      if tile.is_mined
       end
     end
   end
@@ -42,7 +45,7 @@ class Minesweeper
   def parse_pos(string)
     pos_array = string.split(",").map{|el| Integer(el)}
     return nil if pos_array.length != 2
-    return nil unless pos_array.all?{|el| board.is_valid_location?}
+    return nil unless pos_array.all?{|el| board.is_valid_location?(pos_array.first,pos_array.last)}
     pos_array
   end
 
@@ -144,5 +147,5 @@ class Tile
   attr_accessor :is_mined, :is_flagged, :adjacent, :revealed
 end
 
-board=Board.new
-board.render
+game=Minesweeper.new
+game.run
