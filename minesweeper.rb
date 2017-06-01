@@ -19,20 +19,23 @@ class Minesweeper
   def play_turn
     puts "Do you want to flag or move?"
     answer = gets.chomp.downcase
-    if answer == "flag"
-      puts "Which tile do you want to flag?"
-      tile_pos = get_user_pick
-      tile = board[tile_pos.first, tile_pos.last]
-      tile.is_flagged = true unless tile_pos.nil?
-    end
+    flag if answer == "flag"
+    move if answer == "move"
+  end
 
-    if answer == "move"
-      puts "Which tile do you want to move on."
-      tile_pos = get_user_pick
-      tile = board[tile_pos.first, tile_pos.last]
-      if tile.is_mined
-      end
+  def move
+    puts "Which tile do you want to move on."
+    tile_pos = get_user_pick
+    tile = board[tile_pos.first, tile_pos.last]
+    if tile.is_mined
     end
+  end
+
+  def flag
+    puts "Which tile do you want to flag?"
+    tile_pos = get_user_pick
+    tile = board[tile_pos.first, tile_pos.last]
+    tile.is_flagged = true unless tile_pos.nil?
   end
 
   def get_user_pick
