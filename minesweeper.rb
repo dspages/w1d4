@@ -18,18 +18,25 @@ class Minesweeper
     answer = gets.chomp.downcase
     if answer == "flag"
       puts "Which tile do you want to flag?"
-      tile_pos = gets.chomp
-      tile_pos = parse_pos(tile_pos)
-      if tile_pos == nil
-        puts "That is not a valid tile location!"
-        return
-      end
-      board[tile_pos[0],tile_pos[1]].is_flagged = true
+      tile_pos = get_user_pick
+      tile = board[tile_pos.first, tile_pos.last]
+      tile.is_flagged = true unless tile_pos.nil
     end
 
     if answer == "move"
       puts "Which tile do you want to move on."
+      tile_pos = get_user_pick
+      tile = board[tile_pos.first, tile_pos.last]
+      if tile.mined
+      end
     end
+  end
+
+  def get_user_pick
+    tile_pos = gets.chomp
+    tile_pos = parse_pos(tile_pos)
+    puts "That is not a valid tile location!" if tile_pos == nil
+    tile_pos
   end
 
   def parse_pos(string)
